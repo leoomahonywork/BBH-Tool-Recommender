@@ -20,7 +20,7 @@
     <div class="container w-full p-8 bg-white rounded-xl shadow-2xl space-y-6">
         <h1 class="text-3xl font-bold text-gray-900 text-center">BBH Data Tool Recommender</h1>
         <p class="text-gray-600 text-center">
-            Describe your strategic question or challenge below, and I will recommend the best tool or combination of tools from our list. This version does not require an API.
+            Describe your strategic question or challenge below, and I will recommend the best tool or combination of tools from our list.
         </p>
 
         <!-- User input area -->
@@ -48,54 +48,215 @@
     </div>
 
     <script>
-        // The "knowledge base" of tools from your PDF.
+        // --- DATA & KNOWLEDGE BASE ---
         const toolDescriptions = [
-            { name: "TGI UK", description: "Comprehensive consumer research tool for deep insights into the lifestyles, attitudes, media consumption, and purchasing behavior of the UK population. Used for defining and segmenting target audiences and planning media campaigns.", keywords: ["consumer", "uk", "demographics", "lifestyles", "attitudes", "media", "audience", "planning"] },
-            { name: "Nielsen", description: "Global leader in audience measurement and media analytics, tracking TV, radio, and digital media consumption. Provides data for optimizing media plans, measuring ad effectiveness, and refining campaign strategies.", keywords: ["nielsen", "audience", "media", "tv", "radio", "digital", "ad effectiveness", "competitive benchmarking"] },
-            { name: "Factiva", description: "Premium news aggregation and business intelligence platform with thousands of global news sources, publications, and company reports. Used for trend-spotting, competitive analysis, and tracking industry developments.", keywords: ["news", "business", "competitive analysis", "industry developments", "trends"] },
-            { name: "YouGov", description: "Offers extensive survey-based data, including the YouGov Profiles tool, which provides a detailed look at audience segments' interests, opinions, and brand perceptions. An efficient way to validate audience assumptions and benchmark brand sentiment.", keywords: ["yougov", "survey", "audience", "brand perceptions", "sentiment", "benchmarking"] },
-            { name: "Financial Times", description: "A trusted source of global business news and analysis, invaluable for staying ahead of macroeconomic trends, regulatory shifts, and industry-specific developments.", keywords: ["financial times", "business news", "economic", "trends", "regulatory"] },
-            { name: "Mintel", description: "Delivers expert market intelligence through detailed industry reports, consumer trends, and competitive analysis across sectors like food, beauty, and retail. Its combination of data and expert commentary helps uncover innovation opportunities.", keywords: ["mintel", "market intelligence", "consumer trends", "competitive analysis", "food", "beauty", "retail"] },
-            { name: "GMID (Euromonitor International)", description: "Offers comprehensive international market data, including economic indicators, industry statistics, and consumer trends. Especially useful for strategists working on global or regional campaigns.", keywords: ["gmid", "euromonitor", "international", "global", "market data", "economic", "consumer trends"] },
-            { name: "Foresight Factory", description: "A trend forecasting service that analyzes cultural, social, and technological trends shaping consumer behavior. It helps brands stay ahead of change with predictive insights.", keywords: ["foresight", "trends", "forecasting", "cultural", "social", "technological", "consumer behavior"] },
-            { name: "Contagious", description: "A marketing intelligence platform that curates the most innovative and effective advertising campaigns globally. Used for inspiration, benchmarking creative excellence, and understanding culture-led campaigns.", keywords: ["contagious", "marketing", "advertising", "inspiration", "creative", "campaigns", "effectiveness"] },
-            { name: "Netbase", description: "A social media analytics and consumer intelligence platform that uses AI to monitor online conversations, sentiment, and trends in real-time. Valuable for understanding how audiences talk about brands and for culturally-tuned campaigns.", keywords: ["netbase", "social media", "sentiment", "online conversations", "trends", "brands"] },
-            { name: "WARC", description: "A go-to source for advertising effectiveness insights, housing case studies, best practices, media planning data, and strategic frameworks. Used to back up creative and media recommendations with proven evidence.", keywords: ["warc", "advertising", "effectiveness", "case studies", "media planning"] },
-            { name: "Statista", description: "A statistics portal that aggregates data from over 22,500 sources, covering industries, markets, and consumer trends. An easy-to-navigate tool for finding quick, reliable charts and figures.", keywords: ["statista", "statistics", "charts", "figures", "market size", "consumer trends"] },
-            { name: "GWI (GlobalWebIndex)", description: "Provides rich data on online consumer behavior across demographics and global markets. Specializes in psychographics, media consumption, digital usage, and brand attitudes. A go-to tool for building detailed audience segments.", keywords: ["gwi", "globalwebindex", "online behavior", "psychographics", "demographics", "audience segments"] },
+            {
+                name: "TGI UK",
+                description: "Comprehensive consumer research for deep insights into UK lifestyles, attitudes, and media consumption. Best for defining and segmenting UK audiences.",
+                keywords: ["consumer", "attitudes", "demographics", "lifestyles", "media", "audience", "planning"],
+                geography: "UK",
+                categories: [],
+            },
+            {
+                name: "Nielsen",
+                description: "Global leader in media analytics, tracking TV, radio, and digital consumption. Crucial for optimizing media plans and competitive benchmarking.",
+                keywords: ["audience", "media", "tv", "radio", "digital", "ad effectiveness", "competitive benchmarking", "retail"],
+                geography: "Global",
+                categories: ["retail"],
+            },
+            {
+                name: "Factiva",
+                description: "Premium news aggregation for business intelligence. Use it for trend-spotting, competitive analysis, and tracking industry developments from global news sources.",
+                keywords: ["news", "business", "competitive analysis", "industry", "developments", "trends"],
+                geography: "Global",
+                categories: ["all"],
+            },
+            {
+                name: "YouGov BrandIndex",
+                description: "Provides survey-based data on brand perceptions and opinions. Ideal for validating audience assumptions and benchmarking brand sentiment against competitors.",
+                keywords: ["survey", "audience", "brand perceptions", "sentiment", "benchmarking", "brand health"],
+                geography: "Global",
+                categories: ["all"],
+            },
+            {
+                name: "Financial Times",
+                description: "A trusted source of global business and financial news. Valuable for tracking macroeconomic trends and building informed narratives for clients in finance or tech.",
+                keywords: ["financial", "business", "economic", "trends", "tech", "finance"],
+                geography: "Global",
+                categories: ["finance", "tech"],
+            },
+            {
+                name: "Mintel",
+                description: "Expert market intelligence with detailed industry reports and consumer trends. Great for uncovering innovation opportunities and competitive analysis.",
+                keywords: ["market intelligence", "consumer trends", "competitive analysis", "innovation", "report", "industry"],
+                geography: "Global",
+                categories: ["food & beverage", "beauty", "retail", "tech", "fashion", "luxury", "fmcg"],
+            },
+            {
+                name: "GMID (Euromonitor)",
+                description: "Comprehensive international market data. Essential for a macro-level understanding of markets and for global or regional campaigns.",
+                keywords: ["international", "global", "regional", "market data", "economic", "consumer trends", "gmid", "euromonitor"],
+                geography: "Global",
+                categories: ["all"],
+            },
+            {
+                name: "Foresight Factory",
+                description: "A trend forecasting service that analyzes cultural, social, and technological trends. Helps brands stay ahead of change and develop trend-informed creative briefs.",
+                keywords: ["trends", "forecasting", "cultural", "social", "technological", "consumer behavior"],
+                geography: "Global",
+                categories: ["all"],
+            },
+            {
+                name: "Contagious",
+                description: "A marketing intelligence platform for innovative and effective advertising campaigns. Use for inspiration and to benchmark creative excellence.",
+                keywords: ["marketing", "advertising", "inspiration", "creative", "campaigns", "effectiveness"],
+                geography: "Global",
+                categories: ["all"],
+            },
+            {
+                name: "Netbase Quid",
+                description: "Social media analytics and consumer intelligence. Uses AI to monitor online conversations, sentiment, and trends in real-time. Ideal for culturally-tuned and reactive campaigns.",
+                keywords: ["social media", "sentiment", "online conversations", "trends", "brands", "buzz", "influencers", "analytics", "twitter", "instagram"],
+                geography: "Global",
+                categories: ["all"],
+            },
+            {
+                name: "WARC",
+                description: "Go-to source for advertising effectiveness insights. Contains case studies, best practices, and strategic frameworks to back up recommendations with proven evidence.",
+                keywords: ["advertising", "effectiveness", "case studies", "media planning", "strategy"],
+                geography: "Global",
+                categories: ["all"],
+            },
+            {
+                name: "Statista",
+                description: "A statistics portal for quick, reliable charts and figures. Aggregates data from over 22,500 sources for presentations and validating assumptions.",
+                keywords: ["statistics", "charts", "figures", "market size", "data points", "trends", "reports", "industries"],
+                geography: "Global",
+                categories: ["all"],
+            },
+            {
+                name: "GWI (GlobalWebIndex)",
+                description: "Provides rich data on online consumer behavior, psychographics, media consumption, and brand attitudes across demographics and global markets. A go-to for detailed audience segments.",
+                keywords: ["online behavior", "psychographics", "demographics", "audience segments", "global", "online", "internet", "gwi", "attitudes"],
+                geography: "Global",
+                categories: ["all"],
+            },
         ];
 
-        // Function to find recommendations based on keywords
-        function getRecommendationWithoutApi(query) {
-            const lowerCaseQuery = query.toLowerCase();
-            const recommendedTools = new Set();
-            let recommendationText = "";
-            let foundMatch = false;
+        // Mappings for a more flexible matching
+        const geoMappings = {
+            "uk": ["uk", "great britain", "england", "scotland", "wales"],
+            "usa": ["us", "usa", "united states", "america"],
+            "china": ["china", "chinese"],
+            "japan": ["japan", "japanese"],
+            "france": ["france", "french"],
+            "brazil": ["brazil", "brazilian"],
+            "germany": ["germany", "german"],
+            "india": ["india", "indian"],
+            "spain": ["spain", "spanish"],
+            "global": ["global", "international", "worldwide"]
+        };
 
-            // Iterate through each tool and check for keyword matches
+        const categoryMappings = {
+            "food & beverage": ["food", "beverage", "ice cream", "drinks", "snacks", "fmcg"],
+            "beauty": ["beauty", "cosmetics", "skincare", "makeup"],
+            "retail": ["retail", "shopping", "ecommerce"],
+            "finance": ["finance", "banking"],
+            "tech": ["tech", "technology"],
+            "luxury": ["luxury", "high-end", "premium"],
+            "fashion": ["fashion", "apparel"],
+            "media": ["media", "tv", "radio", "social media", "digital", "advertising"],
+        };
+
+        const audienceMappings = {
+            "consumer": ["consumer", "customer", "audience", "demographics", "lifestyles"],
+            "trends": ["trends", "forecasting", "future"],
+            "brand": ["brand", "sentiment", "brand health", "perception", "benchmarking"],
+            "social": ["social media", "online conversations", "sentiment", "social listening"],
+            "market": ["market", "market size", "industry", "sector", "competitive", "competitors"]
+        };
+
+        // --- RECOMMENDATION LOGIC ---
+        function getRecommendation(query) {
+            const lowerCaseQuery = query.toLowerCase();
+            const scores = {};
+
+            // Initialize scores for all tools
             toolDescriptions.forEach(tool => {
-                const matchedKeywords = tool.keywords.filter(keyword => lowerCaseQuery.includes(keyword));
-                if (matchedKeywords.length > 0) {
-                    recommendedTools.add(tool);
-                    foundMatch = true;
-                }
+                scores[tool.name] = { score: 0, matches: new Set() };
             });
 
-            if (foundMatch) {
-                // If matches are found, format the recommendation
-                recommendationText = "Based on your query, here are the tools that can help:<br><br>";
-                recommendedTools.forEach(tool => {
-                    recommendationText += `<b>${tool.name}</b>: ${tool.description}<br><br>`;
-                });
-            } else {
-                // If no matches, provide a general recommendation
-                recommendationText = "I couldn't find a specific match for your query. For a broad range of information, you might consider **Statista** for quick data points, **Mintel** for detailed consumer and market reports, or **GWI** for deep audience insights.";
+            // Score based on geography
+            let detectedGeography = null;
+            for (const geo in geoMappings) {
+                if (geoMappings[geo].some(keyword => lowerCaseQuery.includes(keyword))) {
+                    detectedGeography = geo;
+                    break;
+                }
+            }
+            if (detectedGeography && detectedGeography !== "uk") {
+                scores["GWI (GlobalWebIndex)"].score += 2;
+                scores["Mintel"].score += 2;
+                scores["GMID (Euromonitor)"].score += 2;
+                scores["Statista"].score += 1;
+            } else if (detectedGeography === "uk") {
+                scores["TGI UK"].score += 3;
             }
 
+            // Score based on categories
+            for (const category in categoryMappings) {
+                if (categoryMappings[category].some(keyword => lowerCaseQuery.includes(keyword))) {
+                    toolDescriptions.forEach(tool => {
+                        if (tool.categories.includes(category) || tool.categories.includes("all")) {
+                            scores[tool.name].score += 2;
+                            scores[tool.name].matches.add(category);
+                        }
+                    });
+                }
+            }
+
+            // Score based on keyword groups
+            for (const group in audienceMappings) {
+                if (audienceMappings[group].some(keyword => lowerCaseQuery.includes(keyword))) {
+                    toolDescriptions.forEach(tool => {
+                        if (tool.keywords.some(keyword => audienceMappings[group].includes(keyword))) {
+                            scores[tool.name].score += 1;
+                            scores[tool.name].matches.add(group);
+                        }
+                    });
+                }
+            }
+
+            // Rank tools by score
+            const rankedTools = Object.keys(scores)
+                .map(name => ({ name, ...scores[name] }))
+                .sort((a, b) => b.score - a.score)
+                .filter(tool => tool.score > 0);
+
+            if (rankedTools.length === 0) {
+                return "I couldn't find a specific tool for your request. For general information, consider using **Statista** for quick data or **Mintel** for detailed industry reports.";
+            }
+
+            // Generate recommendation text
+            let recommendationText = "Based on your strategic question, I recommend the following tool(s):<br><br>";
+            
+            const topTool = rankedTools[0];
+            recommendationText += `<b>${topTool.name}</b>: ${toolDescriptions.find(t => t.name === topTool.name).description}<br><br>`;
+
+            if (rankedTools.length > 1) {
+                const secondaryTools = rankedTools.slice(1).filter(tool => tool.score >= topTool.score * 0.75);
+                if (secondaryTools.length > 0) {
+                    recommendationText += "For a more comprehensive view, also consider using:<br><br>";
+                    secondaryTools.forEach(tool => {
+                        recommendationText += `<b>${tool.name}</b>: ${toolDescriptions.find(t => t.name === tool.name).description}<br><br>`;
+                    });
+                }
+            }
+            
             return recommendationText;
         }
 
-        // Wait for the DOM to be fully loaded before adding event listeners
+        // --- UI LOGIC ---
         document.addEventListener('DOMContentLoaded', () => {
             const userQueryEl = document.getElementById('user-query');
             const submitButton = document.getElementById('submit-button');
@@ -109,10 +270,7 @@
                     return;
                 }
 
-                // Call the local recommendation function instead of an API
-                const recommendation = getRecommendationWithoutApi(userQuery);
-
-                // Display the result
+                const recommendation = getRecommendation(userQuery);
                 responseContentEl.innerHTML = recommendation;
                 aiResponseEl.classList.remove('hidden');
             });
